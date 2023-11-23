@@ -1,5 +1,3 @@
-use std::marker::PhantomData;
-
 #[derive(Copy, Clone, Default)]
 pub struct Point {
     x: i32,
@@ -7,32 +5,15 @@ pub struct Point {
 }
 
 #[derive(Clone)]
-enum EmptyPolylineState {}
-
-#[derive(Clone)]
-enum NonEmptyPolylineState {}
-
-pub trait PolylineState {}
-
-impl PolylineState for EmptyPolylineState {}
-impl PolylineState for NonEmptyPolylineState {}
-
-#[derive(Clone)]
-pub struct Polyline<S: PolylineState> {
+pub struct Polyline {
     points: Vec<Point>,
-    _state: PhantomData<S>,
 }
 
-impl Polyline<EmptyPolylineState> {
-    pub fn with_point(p: Point) -> Polyline<NonEmptyPolylineState> {
-        Polyline {
-            points: vec![p],
-            _state: PhantomData,
-        }
+impl Polyline {
+    pub fn init_with(p: Point) -> Self {
+        Self { points: vec![p] }
     }
-}
 
-impl Polyline<NonEmptyPolylineState> {
     pub fn add_point(&mut self, p: Point) {
         self.points.push(p);
     }
@@ -44,6 +25,7 @@ impl Polyline<NonEmptyPolylineState> {
 
 fn main() {
     let p1 = Point { x: 1, y: 2 };
+    #[allow(clippy::clone_on_copy)]
     let p2 = p1.clone();
     let p3 = p1;
     let p4: Point = Default::default();
@@ -60,7 +42,7 @@ fn main() {
     assert_eq!(p4.x, 0);
     assert_eq!(p4.y, 0);
 
-    let mut poly = Polyline::with_point(p1);
+    let mut poly = Polyline::init_with(p1);
     poly.add_points(vec![p2, p3]);
     poly.add_point(p4);
 
