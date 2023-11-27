@@ -34,7 +34,11 @@ impl<Fut: Future> Future for MeasurableFuture<Fut> {
 
         match this.inner_future.poll(cx) {
             Poll::Pending => Poll::Pending,
-            Poll::Ready(output) => Poll::Ready((output, start.elapsed())),
+            Poll::Ready(output) => {
+                let duration = start.elapsed();
+                println!("Future duration: {}", duration.as_nanos());
+                Poll::Ready((output, duration))
+            }
         }
     }
 }
@@ -54,6 +58,6 @@ pub fn check() {
     let mut cx = Context::from_waker(&waker);
 
     if let Poll::Ready((output, duration)) = future.as_mut().poll(&mut cx) {
-        println!("{output} {}", duration.as_micros());
+        println!("{output} {}", duration.as_nanos());
     }
 }
