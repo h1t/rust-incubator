@@ -1,4 +1,4 @@
-use std::{borrow::Borrow, error::Error, fmt::Display, ops::Deref, sync::OnceLock};
+use std::{borrow::Borrow, error::Error, fmt::Display, sync::OnceLock};
 
 use regex::Regex;
 
@@ -12,14 +12,6 @@ pub struct EmailString(String);
 impl EmailString {
     fn get_regex() -> &'static Regex {
         EMAIL_REGEXP.get_or_init(|| Regex::new(EMAIL_RAW_REGEXP).expect("email regexp is invalid"))
-    }
-}
-
-impl Deref for EmailString {
-    type Target = str;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
     }
 }
 
@@ -38,6 +30,12 @@ impl Borrow<str> for EmailString {
 impl Display for EmailString {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(&self.0)
+    }
+}
+
+impl From<EmailString> for String {
+    fn from(value: EmailString) -> Self {
+        value.0
     }
 }
 
@@ -93,6 +91,8 @@ mod tests {
 
         let email = EmailString::try_from("test@test.com");
         assert!(email.is_ok());
-        assert!(!email.unwrap().is_empty());
+
+        let email_str: String = email.unwrap().into();
+        assert!(!email_str.is_empty());
     }
 }
