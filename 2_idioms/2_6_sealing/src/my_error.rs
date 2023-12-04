@@ -6,6 +6,12 @@ use std::{
     fmt::{Debug, Display},
 };
 
+mod private {
+
+    #[derive(Debug)]
+    pub struct Internal;
+}
+
 /// Basic expectations for error values.
 pub trait MyError: Debug + Display {
     /// The lower-level source of this error, if any.
@@ -67,7 +73,7 @@ pub trait MyError: Debug + Display {
     ///
     /// __This is memory-unsafe to override in user code.__
     #[doc(hidden)]
-    fn type_id(&self) -> TypeId
+    fn type_id(&self, _: private::Internal) -> TypeId
     where
         Self: 'static,
     {
