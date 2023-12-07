@@ -35,7 +35,6 @@ fn get_secret_number() -> u32 {
     secret_number
         .trim()
         .parse()
-        .ok()
         .expect("Secret number is not a number")
 }
 
