@@ -2,6 +2,7 @@
 # It is not intended for manual editing.
 version = 3
 
+
 [[package]]
 name = "step_1"
 version = "0.1.0"
@@ -13,6 +14,9 @@ version = "0.1.0"
 [[package]]
 name = "step_1_2"
 version = "0.1.0"
+dependencies = [
+ "pin-project",
+]
 
 [[package]]
 name = "step_1_3"
@@ -41,6 +45,9 @@ version = "0.1.0"
 [[package]]
 name = "step_1_9"
 version = "0.1.0"
+dependencies = [
+ "rand",
+]
 
 [[package]]
 name = "step_2"
