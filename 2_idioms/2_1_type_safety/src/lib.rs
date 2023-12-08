@@ -27,41 +27,60 @@ pub struct Deleted;
 
 #[derive(Clone)]
 pub struct Post<S> {
+    data: PostData,
+    _state: PhantomData<S>,
+}
+
+#[derive(Clone)]
+struct PostData {
     id: post::Id,
     user_id: user::Id,
     title: post::Title,
     body: post::Body,
-    _state: PhantomData<S>,
 }
 
 impl Post<New> {
     pub fn new(id: post::Id, user_id: user::Id, title: post::Title, body: post::Body) -> Self {
         Self {
-            id,
-            user_id,
-            title,
-            body,
+            data: PostData {
+                id,
+                user_id,
+                title,
+                body,
+            },
             _state: PhantomData,
         }
     }
 
     pub fn publish(self) -> Post<Unmoderated> {
-        todo!()
+        Post {
+            data: self.data,
+            _state: PhantomData,
+        }
     }
 }
 
 impl Post<Unmoderated> {
     pub fn allow(self) -> Post<Published> {
-        todo!()
+        Post {
+            data: self.data,
+            _state: PhantomData,
+        }
     }
 
     pub fn deny(self) -> Post<Deleted> {
-        todo!()
+        Post {
+            data: self.data,
+            _state: PhantomData,
+        }
     }
 }
 
 impl Post<Published> {
     pub fn delete(self) -> Post<Deleted> {
-        todo!()
+        Post {
+            data: self.data,
+            _state: PhantomData,
+        }
     }
 }
