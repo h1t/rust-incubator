@@ -5,6 +5,8 @@ pub trait EventSourced<Ev: ?Sized> {
 pub mod user {
     use std::time::SystemTime;
 
+    use crate::event::UserCreated;
+
     use super::{event, EventSourced};
 
     #[derive(Debug)]
@@ -76,23 +78,12 @@ pub mod user {
 
     impl EventSourced<Event> for User {
         fn apply(&mut self, ev: &Event) {
-            // Creation
-            if let Event::Created(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            // Online/Offline
-            if let Event::Online(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            if let Event::Offline(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            // Deletion
-            if let Event::Deleted(ev) = ev {
-                self.apply(ev);
+            match ev {
+                Event::Created(ev) => self.apply(ev),
+                Event::Online(ev) => self.apply(ev),
+                Event::Offline(ev) => self.apply(ev),
+                Event::Deleted(ev) => self.apply(ev),
+                Event::NameUpdated(_) => (),
             }
         }
     }
