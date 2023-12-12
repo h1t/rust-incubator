@@ -3,3 +3,9 @@ name = "step_3_9"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[dependencies]
+clap = { version = "4.4.11", features = ["derive", "env"] }
+config = "0.13.4"
+humantime-serde = "1.1.1"
+serde = "1.0.193"
