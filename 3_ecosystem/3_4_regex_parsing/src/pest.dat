@@ -1,0 +1,14 @@
+format_spec  = ${ (fill? ~ align)? ~ sign? ~ "#"? ~ "0"? ~ width? ~ ("." ~ precision)? ~ type_? }
+
+fill         = _{ ASCII_ALPHANUMERIC | !sign }
+align        = _{ "<" | "^" | ">" }
+sign         =  { "+" | "-" }
+width        =  { count }
+precision    =  { count | "*" }
+type_        = _{ identifier | "?" | "" }
+count        = _{ parameter | integer }
+parameter    = _{ argument ~ "$" }
+
+identifier   = _{ ASCII_ALPHANUMERIC+ }
+integer      = _{ ASCII_DIGIT+ }
+argument     = _{ integer }
