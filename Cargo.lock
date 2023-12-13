@@ -11,6 +11,7 @@ dependencies = [
  "memchr",
 ]
 
+
 [[package]]
 name = "quote"
 version = "1.0.33"
@@ -86,16 +87,6 @@ name = "regex-syntax"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
-
-[[package]]
-name = "sized-chunks"
-version = "0.6.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16d69225bde7a69b235da73377861095455d298f2b970996eec25ddbb42b3d1e"
-dependencies = [
- "bitmaps",
- "typenum",
-]
 
 [[package]]
 name = "step_1"
@@ -221,6 +212,15 @@ dependencies = [
 [[package]]
 name = "step_3_6"
 version = "0.1.0"
+dependencies = [
+ "humantime-serde",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "time",
+ "toml",
+ "uuid",
+]
 
 [[package]]
 name = "step_3_7"
@@ -266,3 +266,4 @@ name = "wasi"
 version = "0.11.0+wasi-snapshot-preview1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
+
