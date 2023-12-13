@@ -89,7 +89,7 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [x] [2.2. Swapping values with `mem::replace`][Step 2.2] (1 day)
     - [x] [2.3. Bound behavior, not data][Step 2.3] (1 day)
     - [x] [2.4. Abstract type in, concrete type out][Step 2.4] (1 day)
-    - [ ] [2.5. Exhaustivity][Step 2.5] (1 day)
+    - [x] [2.5. Exhaustivity][Step 2.5] (1 day)
     - [x] [2.6. Sealing][Step 2.6] (1 day)
 - [ ] [3. Common ecosystem][Step 3] (2 days, after all sub-steps)
     - [ ] [3.1. Testing and mocking][Step 3.1] (1 day)
