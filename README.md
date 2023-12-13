@@ -93,7 +93,7 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [x] [2.6. Sealing][Step 2.6] (1 day)
 - [ ] [3. Common ecosystem][Step 3] (2 days, after all sub-steps)
     - [ ] [3.1. Testing and mocking][Step 3.1] (1 day)
-    - [ ] [3.2. Declarative and procedural macros][Step 3.2] (1 day)
+    - [x] [3.2. Declarative and procedural macros][Step 3.2] (1 day)
     - [ ] [3.3. Date and time][Step 3.3] (1 day)
     - [ ] [3.4. Regular expressions and custom parsers][Step 3.4] (1 day)
     - [ ] [3.5. Collections and iterators][Step 3.5] (1 day)
