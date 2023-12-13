@@ -4,73 +4,75 @@
 //!
 //! [0]: https://docs.rs/itertools/latest/src/itertools/lib.rs.html#2078-2136
 
-use std::fmt;
+mod private {
 
-use self::format::{Format, FormatWith};
+    use super::format::{self, Format, FormatWith};
+    use core::fmt;
 
-/// Extension trait for an [`Iterator`].
-pub trait MyIteratorExt: Iterator {
-    /// Format all iterator elements, separated by `sep`.
-    ///
-    /// All elements are formatted (any formatting trait)
-    /// with `sep` inserted between each element.
-    ///
-    /// **Panics** if the formatter helper is formatted more than once.
-    ///
-    /// ```rust
-    /// use step_2_6::MyIteratorExt as _;
-    ///
-    /// let data = [1.1, 2.71828, -3.];
-    /// assert_eq!(
-    ///     format!("{:.2}", data.iter().format(", ")),
-    ///            "1.10, 2.72, -3.00");
-    /// ```
-    fn format(self, sep: &str) -> Format<Self>
-    where
-        Self: Sized,
-    {
-        format::new_format_default(self, sep)
+    /// Extension trait for an [`Iterator`].
+    pub(crate) trait MyIteratorExt: Iterator {
+        /// Format all iterator elements, separated by `sep`.
+        ///
+        /// All elements are formatted (any formatting trait)
+        /// with `sep` inserted between each element.
+        ///
+        /// **Panics** if the formatter helper is formatted more than once.
+        ///
+        /// ```compile_fail
+        /// use step_2_6::private::MyIteratorExt as _;
+        ///
+        /// let data = [1.1, 2.71828, -3.];
+        /// assert_eq!(
+        ///     format!("{:.2}", data.iter().format(", ")),
+        ///            "1.10, 2.72, -3.00");
+        /// ```
+        fn format(self, sep: &str) -> Format<Self>
+        where
+            Self: Sized,
+        {
+            format::new_format_default(self, sep)
+        }
+
+        /// Format all iterator elements, separated by `sep`.
+        ///
+        /// This is a customizable version of [`.format()`](MyIteratorExt::format).
+        ///
+        /// The supplied closure `format` is called once per iterator element,
+        /// with two arguments: the element and a callback that takes a
+        /// `&Display` value, i.e. any reference to type that implements `Display`.
+        ///
+        /// Using `&format_args!(...)` is the most versatile way to apply custom
+        /// element formatting. The callback can be called multiple times if needed.
+        ///
+        /// **Panics** if the formatter helper is formatted more than once.
+        ///
+        /// ```compile_fail
+        /// use step_2_6::private::MyIteratorExt as _;
+        ///
+        /// let data = [1.1, 2.71828, -3.];
+        /// let data_formatter = data.iter().format_with(", ", |elt, f| f(&format_args!("{:.2}", elt)));
+        /// assert_eq!(format!("{}", data_formatter),
+        ///            "1.10, 2.72, -3.00");
+        ///
+        /// // .format_with() is recursively composable
+        /// let matrix = [[1., 2., 3.],
+        ///               [4., 5., 6.]];
+        /// let matrix_formatter = matrix.iter().format_with("\n", |row, f| {
+        ///     f(&row.iter().format_with(", ", |elt, g| g(&elt)))
+        /// });
+        /// assert_eq!(matrix_formatter.to_string(), "1, 2, 3\n4, 5, 6");
+        /// ```
+        fn format_with<F>(self, sep: &str, format: F) -> FormatWith<Self, F>
+        where
+            Self: Sized,
+            F: FnMut(Self::Item, &mut dyn FnMut(&dyn fmt::Display) -> fmt::Result) -> fmt::Result,
+        {
+            format::new_format(self, sep, format)
+        }
     }
 
-    /// Format all iterator elements, separated by `sep`.
-    ///
-    /// This is a customizable version of [`.format()`](MyIteratorExt::format).
-    ///
-    /// The supplied closure `format` is called once per iterator element,
-    /// with two arguments: the element and a callback that takes a
-    /// `&Display` value, i.e. any reference to type that implements `Display`.
-    ///
-    /// Using `&format_args!(...)` is the most versatile way to apply custom
-    /// element formatting. The callback can be called multiple times if needed.
-    ///
-    /// **Panics** if the formatter helper is formatted more than once.
-    ///
-    /// ```rust
-    /// use step_2_6::MyIteratorExt as _;
-    ///
-    /// let data = [1.1, 2.71828, -3.];
-    /// let data_formatter = data.iter().format_with(", ", |elt, f| f(&format_args!("{:.2}", elt)));
-    /// assert_eq!(format!("{}", data_formatter),
-    ///            "1.10, 2.72, -3.00");
-    ///
-    /// // .format_with() is recursively composable
-    /// let matrix = [[1., 2., 3.],
-    ///               [4., 5., 6.]];
-    /// let matrix_formatter = matrix.iter().format_with("\n", |row, f| {
-    ///     f(&row.iter().format_with(", ", |elt, g| g(&elt)))
-    /// });
-    /// assert_eq!(matrix_formatter.to_string(), "1, 2, 3\n4, 5, 6");
-    /// ```
-    fn format_with<F>(self, sep: &str, format: F) -> FormatWith<Self, F>
-    where
-        Self: Sized,
-        F: FnMut(Self::Item, &mut dyn FnMut(&dyn fmt::Display) -> fmt::Result) -> fmt::Result,
-    {
-        format::new_format(self, sep, format)
-    }
+    impl<T> MyIteratorExt for T where T: Iterator {}
 }
-
-impl<T> MyIteratorExt for T where T: Iterator {}
 
 mod format {
     use std::{cell::RefCell, fmt};
