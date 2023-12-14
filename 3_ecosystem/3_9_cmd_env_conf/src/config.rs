@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use smart_default::SmartDefault;
 use std::time::Duration;
 
 #[derive(Debug, Deserialize, Default)]
@@ -16,21 +17,22 @@ pub struct Mode {
     pub debug: bool,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, SmartDefault)]
+#[serde(default)]
 pub struct Server {
-    #[serde(default = "external_url")]
+    #[default = "http://127.0.0.1"]
     pub external_url: String,
 
-    #[serde(default = "http_port")]
+    #[default = 8081]
     pub http_port: u16,
 
-    #[serde(default = "grpc_port")]
+    #[default = 8082]
     pub grpc_port: u16,
 
-    #[serde(default = "healthz_port")]
+    #[default = 10025]
     pub healthz_port: u16,
 
-    #[serde(default = "metrics_port")]
+    #[default = 9199]
     pub metrics_port: u16,
 }
 
@@ -39,33 +41,33 @@ pub struct Db {
     pub mysql: Mysql,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, SmartDefault)]
+#[serde(default)]
 pub struct Mysql {
-    #[serde(default = "mysql_host")]
+    #[default = "127.0.0.1"]
     pub host: String,
 
-    #[serde(default = "mysql_port")]
+    #[default = 3306]
     pub port: u16,
 
-    #[serde(default = "mysql_dating")]
+    #[default = "default"]
     pub dating: String,
 
-    #[serde(default = "mysql_user")]
+    #[default = "root"]
     pub user: String,
 
-    #[serde(default)]
     pub pass: String,
 
-    //#[serde(default)]
     pub connections: Connections,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, SmartDefault)]
+#[serde(default)]
 pub struct Connections {
-    #[serde(default = "connections_max_idle")]
+    #[default = 30]
     pub max_idle: u64,
 
-    #[serde(default = "connections_max_open")]
+    #[default = 30]
     pub max_open: u64,
 }
 
@@ -74,7 +76,7 @@ pub struct Log {
     pub app: App,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum LogLevel {
     Error,
@@ -98,71 +100,17 @@ pub struct Background {
     pub watchdog: Watchdog,
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, SmartDefault)]
+#[serde(default)]
 pub struct Watchdog {
     #[serde(with = "humantime_serde")]
-    #[serde(default = "watchdog_period")]
+    #[default(Duration::from_secs(5))]
     pub period: Duration,
 
-    #[serde(default = "watchdog_limit")]
+    #[default = 10]
     pub limit: u64,
 
     #[serde(with = "humantime_serde")]
-    #[serde(default = "watchdog_lock_timeout")]
+    #[default(Duration::from_secs(4))]
     pub lock_timeout: Duration,
-}
-
-fn external_url() -> String {
-    "http://127.0.0.1".to_string()
-}
-
-fn http_port() -> u16 {
-    8081
-}
-
-fn grpc_port() -> u16 {
-    8082
-}
-
-fn healthz_port() -> u16 {
-    10025
-}
-
-fn metrics_port() -> u16 {
-    9199
-}
-
-fn mysql_host() -> String {
-    "127.0.0.1".to_string()
-}
-
-fn mysql_port() -> u16 {
-    3306
-}
-
-fn mysql_dating() -> String {
-    "default".to_string()
-}
-fn mysql_user() -> String {
-    "root".to_string()
-}
-
-fn connections_max_idle() -> u64 {
-    30
-}
-
-fn connections_max_open() -> u64 {
-    30
-}
-
-fn watchdog_limit() -> u64 {
-    10
-}
-
-fn watchdog_period() -> Duration {
-    Duration::from_secs(5)
-}
-
-fn watchdog_lock_timeout() -> Duration {
-    Duration::from_secs(4)
 }

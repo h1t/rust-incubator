@@ -9,3 +9,4 @@ clap = { version = "4.4.11", features = ["derive", "env"] }
 config = "0.13.4"
 humantime-serde = "1.1.1"
 serde = "1.0.193"
+smart-default = "0.7.1"
