@@ -102,7 +102,7 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [ ] [3.8. Logging and tracing][Step 3.8] (1 day)
     - [ ] [3.9. Command-line arguments, environment variables and configs][Step 3.9] (1 day)
     - [ ] [3.10. Multithreading and parallelism][Step 3.10] (1 day)
-    - [ ] [3.11. Async I/O, futures and actors][Step 3.11] (2 days)
+    - [x] [3.11. Async I/O, futures and actors][Step 3.11] (2 days)
 - [ ] [4. Backend ecosystem][Step 4] (3 days, after all sub-steps)
     - [ ] [4.1. Databases, connection pools and ORMs][Step 4.1] (1 day)
     - [ ] [4.2. HTTP servers and clients][Step 4.2] (1 day)
