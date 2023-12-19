@@ -7,7 +7,7 @@ publish = false
 [dependencies]
 procedural = {path = "procedural"}
 
-[workspace]
-members = [
-    "procedural",
-]
+# [workspace]
+# members = [
+#     "procedural",
+# ]
