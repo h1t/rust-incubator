@@ -1,5 +1,6 @@
+use anyhow::Result;
 use clap::Parser;
-use std::{error::Error, path::PathBuf};
+use std::path::PathBuf;
 
 use step_3_11::download_all;
 
@@ -13,7 +14,7 @@ struct Args {
     file: PathBuf,
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<()> {
     let Args { max_threads, file } = Args::parse();
     let rt = tokio::runtime::Builder::new_multi_thread()
         .worker_threads(max_threads)
