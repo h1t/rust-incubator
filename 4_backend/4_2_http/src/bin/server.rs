@@ -2,8 +2,10 @@ use axum::routing::{delete, post};
 use axum::{routing::get, Router};
 use log::info;
 use step_4_2::db::DataBase;
-use step_4_2::web;
+use step_4_2::web::{self, ApiDoc};
 use tokio::net::TcpListener;
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
 #[tokio::main]
 async fn main() {
@@ -15,6 +17,7 @@ async fn main() {
         .unwrap();
 
     let app = Router::new()
+        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .route("/create_tables", post(web::create_tables))
         .route("/drop_tables", delete(web::drop_tables))
         .route(
