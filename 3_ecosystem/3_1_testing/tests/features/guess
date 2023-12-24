@@ -1,0 +1,16 @@
+Feature: Guessing number
+    
+  Scenario: Guessing
+    Given 5 as secret number
+    When guess 4
+    Then guess number is less then secret 
+
+  Scenario: Guessing
+    Given 5 as secret number
+    When guess 6
+    Then guess number is great then secret 
+
+  Scenario: Guessing
+    Given 5 as secret number
+    When guess 5
+    Then guess number is equal then secret 

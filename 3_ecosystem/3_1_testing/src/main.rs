@@ -1,21 +1,22 @@
 use std::{cmp::Ordering, env, io};
+use step_3_1::State;
 
 fn main() {
     println!("Guess the number!");
 
-    let secret_number = get_secret_number();
+    let state = State::new(get_secret_number());
 
     loop {
         println!("Please input your guess.");
 
-        let guess = match get_guess_number() {
+        let number = match get_guess_number() {
             Some(n) => n,
             _ => continue,
         };
 
-        println!("You guessed: {}", guess);
+        println!("You guessed: {}", number);
 
-        match guess.cmp(&secret_number) {
+        match state.guess(number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {

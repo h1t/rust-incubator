@@ -8,3 +8,9 @@ publish = false
 assert_cmd = "2.0.12"
 mockall = "0.12.1"
 proptest = "1.4.0"
+cucumber = "0.20.2"
+tokio = { version = "1.35.1", features = ["full"] }
+
+[[test]]
+name = "cucumber"
+harness = false # Allows Cucumber to print output instead of libtest
