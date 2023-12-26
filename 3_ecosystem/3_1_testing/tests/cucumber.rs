@@ -2,7 +2,7 @@ use cucumber::Parameter;
 use cucumber::{given, then, when, World as _};
 use std::cmp::Ordering;
 use std::str::FromStr;
-use step_3_1::State;
+use step_3_1::{FixedNumberGenerator, State};
 
 #[derive(Debug, Parameter)]
 #[param(name = "guess_state", regex = "less|great|equal")]
@@ -43,7 +43,7 @@ struct World {
 
 #[given(expr = "{int} as secret number")] // Cucumber Expression
 async fn someone_is_hungry(w: &mut World, secret: u32) {
-    w.state = Some(State::new(secret));
+    w.state = Some(State::new(FixedNumberGenerator::new(secret)));
 }
 
 #[when(expr = "guess {int}")]

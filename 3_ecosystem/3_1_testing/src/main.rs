@@ -1,10 +1,10 @@
-use std::{cmp::Ordering, env, io};
-use step_3_1::State;
+use std::{cmp::Ordering, io};
+use step_3_1::{RandomNumberGenerator, State};
 
 fn main() {
     println!("Guess the number!");
 
-    let state = State::new(get_secret_number());
+    let state = State::new(RandomNumberGenerator {});
 
     loop {
         println!("Please input your guess.");
@@ -25,18 +25,6 @@ fn main() {
             }
         }
     }
-}
-
-fn get_secret_number() -> u32 {
-    let secret_number = env::args()
-        .skip(1)
-        .take(1)
-        .last()
-        .expect("No secret number is specified");
-    secret_number
-        .trim()
-        .parse()
-        .expect("Secret number is not a number")
 }
 
 fn get_guess_number() -> Option<u32> {
