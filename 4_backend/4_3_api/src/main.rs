@@ -1,3 +1,3 @@
 fn main() {
-    println!("Implement me!");
+    println!("hello");
 }
