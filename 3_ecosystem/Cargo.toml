@@ -3,3 +3,14 @@ name = "step_3"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[dependencies]
+clap = { version = "4.4.11", features = ["derive", "env"] }
+reqwest = { version = "0.11.22", features = ["blocking"] }
+image = { version = "0.24.7", default-features = false, features = ["jpeg"] }
+anyhow = "1.0.75"
+rayon = "1.8.0"
+log = "0.4.20"
+env_logger = "0.10.1"
+url = "2.5.0"
+ureq = "2.9.1"
