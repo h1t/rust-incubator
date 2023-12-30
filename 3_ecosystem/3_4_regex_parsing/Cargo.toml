@@ -3,3 +3,8 @@ name = "step_3_4"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[dependencies]
+pest = "2.7.5"
+pest_derive = "2.7.5"
+regex = "1.10.2"
