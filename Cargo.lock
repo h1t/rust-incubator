@@ -3,10 +3,14 @@
 version = 3
 
 [[package]]
-name = "regex-syntax"
-version = "0.8.2"
+name = "socket2"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
+checksum = "7b5fac59a5cb5dd637972e5fca70daf0523c9067fcdc4842f053dae04a18f8e9"
+dependencies = [
+ "libc",
+ "windows-sys 0.48.0",
+]
 
 
 [[package]]
@@ -115,6 +119,15 @@ dependencies = [
 [[package]]
 name = "step_3_11"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "futures-util",
+ "num_cpus",
+ "reqwest",
+ "tokio",
+ "tokio-stream",
+]
 
 [[package]]
 name = "step_3_2"
@@ -204,5 +217,4 @@ version = "0.1.0"
 name = "step_4_3"
 version = "0.1.0"
 
-[[package]]
 
