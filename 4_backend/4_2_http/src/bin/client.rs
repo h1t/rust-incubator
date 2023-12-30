@@ -1,6 +1,6 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use step_4_1::DataBase;
+use step_4_2::db_thin_client::DbThinClient;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -9,7 +9,7 @@ struct Args {
     command: Commands,
 
     /// Path to configuration file
-    #[clap(short, long, env = "DB_URL", default_value = "db.sqlite3")]
+    #[clap(short, long, env = "DB_URL", default_value = "http://127.0.0.1:3000")]
     url: String,
 }
 
@@ -126,7 +126,7 @@ enum Commands {
 #[tokio::main]
 async fn main() -> Result<()> {
     let Args { command, url } = Args::parse();
-    let db = DataBase::connect(&format!("sqlite://{url}")).await?;
+    let db = DbThinClient::new(url);
 
     match command {
         Commands::CreateTables => db.create_tables().await,
