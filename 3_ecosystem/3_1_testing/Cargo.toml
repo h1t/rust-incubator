@@ -3,3 +3,17 @@ name = "step_3_1"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[dev-dependencies]
+assert_cmd = "2.0.12"
+proptest = "1.4.0"
+cucumber = "0.20.2"
+tokio = { version = "1.35.1", features = ["full"] }
+
+[[test]]
+name = "cucumber"
+harness = false # Allows Cucumber to print output instead of libtest
+
+[dependencies]
+rand = "0.8.5"
+mockall = "0.12.1"
