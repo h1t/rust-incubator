@@ -78,7 +78,7 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [x] [1.1. Default values, cloning and copying][Step 1.1] (1 day)
     - [x] [1.2. Boxing and pinning][Step 1.2] (1 day)
     - [x] [1.3. Shared ownership and interior mutability][Step 1.3] (1 day)
-    - [ ] [1.4. Clone-on-write][Step 1.4] (1 day)
+    - [x] [1.4. Clone-on-write][Step 1.4] (1 day)
     - [x] [1.5. Conversions, casting and dereferencing][Step 1.5] (1 day)
     - [x] [1.6. Static and dynamic dispatch][Step 1.6] (1 day)
     - [x] [1.7. `Sized` and `?Sized` types][Step 1.7] (1 day)
@@ -96,7 +96,7 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [x] [3.2. Declarative and procedural macros][Step 3.2] (1 day)
     - [x] [3.3. Date and time][Step 3.3] (1 day)
     - [x] [3.2. Declarative and procedural macros][Step 3.2] (1 day)
-    - [ ] [3.3. Date and time][Step 3.3] (1 day)
+    - [x] [3.3. Date and time][Step 3.3] (1 day)
     - [x] [3.4. Regular expressions and custom parsers][Step 3.4] (1 day)
     - [x] [3.5. Collections and iterators][Step 3.5] (1 day)
     - [x] [3.6. Serialization and deserialization][Step 3.6] (1 day)
@@ -104,11 +104,11 @@ Do not hesitate to ask your mentor/lead with questions, however you won't receiv
     - [x] [3.8. Logging and tracing][Step 3.8] (1 day)
     - [x] [3.9. Command-line arguments, environment variables and configs][Step 3.9] (1 day)
     - [x] [3.10. Multithreading and parallelism][Step 3.10] (1 day)
-    - [x] [3.11. Async I/O, futures and actors][Step 3.11] (2 days)
-- [ ] [4. Backend ecosystem][Step 4] (3 days, after all sub-steps)
+    - [ ] [3.11. Async I/O, futures and actors][Step 3.11] (2 days)
+- [x] [4. Backend ecosystem][Step 4] (3 days, after all sub-steps)
     - [x] [4.1. Databases, connection pools and ORMs][Step 4.1] (1 day)
     - [x] [4.2. HTTP servers and clients][Step 4.2] (1 day)
-    - [ ] [4.3. API servers, clients and tools][Step 4.3] (1 day)
+    - [x] [4.3. API servers, clients and tools][Step 4.3] (1 day)
 
 
 
