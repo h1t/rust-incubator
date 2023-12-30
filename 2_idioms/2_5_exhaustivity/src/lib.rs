@@ -5,6 +5,8 @@ pub trait EventSourced<Ev: ?Sized> {
 pub mod user {
     use std::time::SystemTime;
 
+    use crate::event::UserCreated;
+
     use super::{event, EventSourced};
 
     #[derive(Debug)]
@@ -19,35 +21,49 @@ pub mod user {
 
     impl EventSourced<event::UserCreated> for User {
         fn apply(&mut self, ev: &event::UserCreated) {
-            self.id = ev.user_id;
-            self.created_at = ev.at;
-            self.last_activity_at = LastActivityDateTime(ev.at.0);
+            let event::UserCreated { user_id, at } = *ev;
+            self.id = user_id;
+            self.created_at = at;
+            self.last_activity_at = LastActivityDateTime(at.0);
         }
     }
 
     impl EventSourced<event::UserNameUpdated> for User {
         fn apply(&mut self, ev: &event::UserNameUpdated) {
-            self.name = ev.name.clone();
+            let event::UserNameUpdated {
+                user_id,
+                ref name,
+                at,
+            } = *ev;
+            self.id = user_id;
+            self.name = name.clone();
+            self.last_activity_at = LastActivityDateTime(at);
         }
     }
 
     impl EventSourced<event::UserBecameOnline> for User {
         fn apply(&mut self, ev: &event::UserBecameOnline) {
-            self.online_since = Some(ev.at);
+            let event::UserBecameOnline { user_id, at } = *ev;
+            self.id = user_id;
+            self.online_since = Some(at);
         }
     }
 
     impl EventSourced<event::UserBecameOffline> for User {
         fn apply(&mut self, ev: &event::UserBecameOffline) {
+            let event::UserBecameOffline { user_id, at } = *ev;
+            self.id = user_id;
             self.online_since = None;
-            self.last_activity_at = LastActivityDateTime(ev.at);
+            self.last_activity_at = LastActivityDateTime(at);
         }
     }
 
     impl EventSourced<event::UserDeleted> for User {
         fn apply(&mut self, ev: &event::UserDeleted) {
-            self.deleted_at = Some(ev.at);
-            self.last_activity_at = LastActivityDateTime(ev.at.0);
+            let event::UserDeleted { user_id, at } = *ev;
+            self.id = user_id;
+            self.deleted_at = Some(at);
+            self.last_activity_at = LastActivityDateTime(at.0);
         }
     }
 
@@ -62,23 +78,12 @@ pub mod user {
 
     impl EventSourced<Event> for User {
         fn apply(&mut self, ev: &Event) {
-            // Creation
-            if let Event::Created(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            // Online/Offline
-            if let Event::Online(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            if let Event::Offline(ev) = ev {
-                self.apply(ev);
-                return;
-            }
-            // Deletion
-            if let Event::Deleted(ev) = ev {
-                self.apply(ev);
+            match ev {
+                Event::Created(ev) => self.apply(ev),
+                Event::Online(ev) => self.apply(ev),
+                Event::Offline(ev) => self.apply(ev),
+                Event::Deleted(ev) => self.apply(ev),
+                Event::NameUpdated(_) => (),
             }
         }
     }
