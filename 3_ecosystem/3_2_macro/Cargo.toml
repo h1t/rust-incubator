@@ -3,3 +3,11 @@ name = "step_3_2"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[dependencies]
+procedural = {path = "procedural"}
+
+[workspace]
+members = [
+    "procedural",
+]
